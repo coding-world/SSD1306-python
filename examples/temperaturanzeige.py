@@ -3,12 +3,8 @@ from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
 
 RESET_PIN = digitalio.DigitalInOut(board.D4)
-
 i2c = board.I2C()
 oled = adafruit_ssd1306.SSD1306_I2C(128, 64, i2c, addr=0x3C, reset=RESET_PIN)
-
-oled.fill(0)
-oled.show()
 
 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 28)
 font2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14)
@@ -33,6 +29,9 @@ def get_temperature_in_degree():
       temp_string = rows[1][equals_pos+2:]
       temp_c = float(temp_string) / 1000.0
       return temp_c
+
+oled.fill(0)
+oled.show()
 
 while True:
   image = Image.new("1", (oled.width, oled.height))
