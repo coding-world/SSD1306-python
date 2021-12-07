@@ -35,19 +35,14 @@ for i in range(1, 7):
     ImageDraw.Draw(image).text((40, 0), str(i), font=font, fill=255)
     numbers.append(image)
 
-
-def show_random():
-    oled.image(numbers[randint(0, 5)])
-    oled.show()
-    time.sleep(0.01)
-
-
 while True:
     if gpio.input(channel) == 0:
         while True:
-            show_random()
+            oled.image(numbers[randint(0, 5)])
+            oled.show()
+            time.sleep(0.01)
             if gpio.input(channel) == 1:
-                show_random()
+                oled.image(numbers[randint(0, 5)])
+                oled.show()
                 time.sleep(0.5)
                 break
-        time.sleep(0.05)
