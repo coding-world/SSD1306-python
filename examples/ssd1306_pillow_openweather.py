@@ -27,11 +27,11 @@ font3 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 16
 
 
 def get_icon(id, size=32):
-    out = BytesIO()
     url = './icons/'+id+'.svg'
     if os.path.isfile(url):
-        cairosvg.svg2png(url=url, write_to=out)  # convert svg to png
-        return Image.open(out).resize((size, size)).convert('1')  # return resized image
+        return Image.open(
+            BytesIO(cairosvg.svg2png(url=url))  # convert svg to png
+        ).resize((size, size)).convert('1')  # return resized image
     else:
         return Image.new("1", (size, size))  # return empty image
 
@@ -61,8 +61,8 @@ while True:
 
         draw.text((0, 0), step['title'], font=font3, fill=255)
         draw.text((0, 16), step['data']['weather'][0]['description'], font=font2, fill=255)
-        draw.text((48, 32), str(step['data']['temp'])+'°C', font=font3, fill=255)
-        draw.text((48, 48), str(step['data']['humidity'])+'%', font=font3, fill=255)
+        draw.text((48, 32), str(step['data']['temp']) + '°C', font=font3, fill=255)
+        draw.text((48, 48), str(step['data']['humidity']) + '%', font=font3, fill=255)
         image.paste(get_icon(step['data']['weather'][0]['icon']), (8, 32))
 
         oled.image(image)
